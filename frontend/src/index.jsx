@@ -4,42 +4,35 @@ import ReactDOM from 'react-dom';
 const baseURL = process.env.ENDPOINT;
 
 const getWeatherFromApi = async () => {
-  try {
-    const response = await fetch(`${baseURL}/weather`);
-    return response.json();
-  } catch (error) {
-    console.error(error);
-  }
+	try {
+		const response = await fetch(`${baseURL}/weather`);
+		return response.json();
+	} catch (error) {
+		console.error(error);
+	}
 
-  return {};
+	return {};
 };
 
 class Weather extends React.Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      icon: "",
-    };
-  }
+		this.state = {
+			icon: ''
+		};
+	}
 
-  async componentWillMount() {
-    const weather = await getWeatherFromApi();
-    this.setState({icon: weather.icon.slice(0, -1)});
-  }
+	async componentWillMount() {
+		const weather = await getWeatherFromApi();
+		this.setState({ icon: weather.icon.slice(0, -1) });
+	}
 
-  render() {
-    const { icon } = this.state;
+	render() {
+		const { icon } = this.state;
 
-    return (
-      <div className="icon">
-        { icon && <img src={`/img/${icon}.svg`} /> }
-      </div>
-    );
-  }
+		return <div className="icon">{icon && <img src={`/img/${icon}.svg`} />}</div>;
+	}
 }
 
-ReactDOM.render(
-  <Weather />,
-  document.getElementById('app')
-);
+ReactDOM.render(<Weather />, document.getElementById('app'));
