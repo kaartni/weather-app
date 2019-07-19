@@ -11,9 +11,14 @@ class Weather extends React.Component {
 		this.getWeatherFromApi = this.getWeatherFromApi.bind(this);
 	}
 
-	getWeatherFromApi() {
+	getWeatherFromApi(lat, lon) {
 		axios
-			.get(`${baseURL}/weather`)
+			.get(`${baseURL}/weather`, {
+				params: {
+					lat: lat,
+					lon: lon
+				}
+			})
 			.then(response => {
 				this.setState({ weatherData: response.data });
 			})
@@ -23,14 +28,16 @@ class Weather extends React.Component {
 	}
 
 	componentWillMount() {
-		this.getWeatherFromApi();
+		navigator.geolocation.getCurrentPosition(position => {
+			this.getWeatherFromApi(position.coords.latitude, position.coords.longitude);
+		});
 	}
 
 	render() {
 		return (
 			<div>
 				{this.state.weatherData.map(data => (
-					<section>
+					<section key={data.dt_txt}>
 						<h3>{data.dt_txt}</h3>
 						<img src={`/img/${data.weather[0].icon.slice(0, -1)}.svg`} height={40} width={40} />
 						<strong>{data.main.temp} C </strong>
