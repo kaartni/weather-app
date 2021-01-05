@@ -13,7 +13,7 @@
 		"lint": "node_modules/.bin/eslint --ext .js --ext .jsx ."
 	},
 	"dependencies": {
-		"axios": "^0.19.0",
+		"axios": "^0.21.1",
 		"dotenv": "^8.0.0",
 		"react": "^15.4.2",
 		"react-dom": "^15.4.2"
